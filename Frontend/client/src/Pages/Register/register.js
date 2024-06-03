@@ -15,8 +15,15 @@ import Cookies from "js-cookie";
 import { BASE_URL } from "../../constent/index";
 const { Title } = Typography;
 const Signup = () => {
-  const [email, setEmail] = useState("");
-  // const [OTP, setOTP] = useState("");
+  const [verificationOtp, setVerificationOtp] = useState("");
+  const [user, setUser] = useState({
+    firstname: "",
+    Surname: "",
+    email: "",
+    password: "",
+    dateofbirth: "",
+    gender: "",
+  });
 
   useEffect(() => {
     document.title = `Sign Up Or Create A New Account || Facebook`;
@@ -30,39 +37,51 @@ const Signup = () => {
   const [form] = Form.useForm();
   const currentDate = new Date().toDateString();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const onModalClose = () => {
+    setIsModalOpen(false);
+  };
   const onChange = async (text) => {
-    console.log("onChange:", text);
+    console.log("onChange:", user);
     try {
-      const { data } = await axios.post(`${BASE_URL}/user/register-otp`, {
-        email: email,
+      const { resData } = await axios.post(`${BASE_URL}/user/register-otp`, {
+        email: user.email,
+        firstname: user.firstname,
+        Surname: user.Surname,
+        password: user.password,
+        dateofbirth: user.dateofbirth.$d.getDate(),
+        gender: user.radiogroup,
         otp: text,
+        VerificationOtp: verificationOtp,
       });
-      if (data.success) {
+      if (resData.success) {
         setIsModalOpen(false);
         navigate("/login");
-        alert(data.message);
+        alert(resData.message);
       }
     } catch (error) {
-      alert(error.response.data.message);
+      alert(error.response.resData.message);
     }
   };
   const sharedProps = {
     onChange,
   };
   const onFinish = async (values) => {
-    setEmail(values.email);
+    setUser({
+      firstname: values.firstname,
+      Surname: values.Surname,
+      email: values.email,
+      password: values.password,
+      dateofbirth: values.dateofbirth.$d.getDate(),
+      gender: values.radiogroup,
+    });
     setIsModalOpen(true);
     try {
       const { data } = await axios.post(`${BASE_URL}/user/register`, {
-        firstname: values.firstname,
-        Surname: values.Surname,
         email: values.email,
-        password: values.password,
-        dateofbirth: values.dateofbirth.$d.getDate(),
-        gender: values.radiogroup,
       });
       if (data.success) {
         alert(data.message);
+        setVerificationOtp(data.VerificationOtp);
         setIsModalOpen(true);
       }
     } catch (error) {
@@ -240,11 +259,11 @@ const Signup = () => {
             >
               Verify Email
             </Button>
-            <Modal open={isModalOpen} footer={null}>
+            <Modal open={isModalOpen} onCancel={onModalClose} footer={null}>
               <Flex gap="middle" align="flex-start" vertical>
                 <Title level={3}>Email OTP Verification </Title>
                 <p>
-                  The Verification email is : <b>{email}</b>
+                  The Verification email is : <b>{user.email}</b>
                 </p>
                 <Input.OTP
                   length={4}
