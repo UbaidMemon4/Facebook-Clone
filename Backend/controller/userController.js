@@ -39,7 +39,7 @@ exports.registerController = async (req, res) => {
     //save new user
     return res.status(201).send({
       success: true,
-      message: "New User Created Succesfully",
+      message: "New User Created Verification OTP Send Succesfully",
       VerificationOtp,
     });
   } catch (error) {
