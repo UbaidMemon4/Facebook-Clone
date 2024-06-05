@@ -18,14 +18,14 @@ const ForgettenPassword = () => {
     if (token) {
       navigate("/page-not-found");
     }
-  });
+  }, []);
   const onFinish = async (values) => {
     try {
-      const { data } = await axios.post(`${BASE_URL}/forget/send-otp`, {
+      const { data } = await axios.post(`${BASE_URL}/user/forget-password`, {
         email: values.email,
       });
       if (data.success) {
-        alert("Facebook Clone OTP is Send Successfully");
+        alert(data.message);
         dispatch(authAction.ForgetEmail(data.email));
         navigate("/newpassword");
       }

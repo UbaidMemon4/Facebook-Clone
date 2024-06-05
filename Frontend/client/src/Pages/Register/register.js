@@ -43,23 +43,23 @@ const Signup = () => {
   const onChange = async (text) => {
     console.log("onChange:", user);
     try {
-      const { resData } = await axios.post(`${BASE_URL}/user/register-otp`, {
-        email: user.email,
-        firstname: user.firstname,
-        Surname: user.Surname,
-        password: user.password,
-        dateofbirth: user.dateofbirth.$d.getDate(),
-        gender: user.radiogroup,
-        otp: text,
+      const { data } = await axios.post(`${BASE_URL}/user/register-otp`, {
+        email: user?.email,
+        firstname: user?.firstname,
+        Surname: user?.Surname,
+        password: user?.password,
+        dateofbirth: user?.dateofbirth,
+        gender: user?.gender,
+        otp: Number(text),
         VerificationOtp: verificationOtp,
       });
-      if (resData.success) {
+      if (data.success) {
+        alert(data.message);
         setIsModalOpen(false);
         navigate("/login");
-        alert(resData.message);
       }
     } catch (error) {
-      alert(error.response.resData.message);
+      alert(error.response.data.message);
     }
   };
   const sharedProps = {

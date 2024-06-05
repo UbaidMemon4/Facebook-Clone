@@ -26,7 +26,6 @@ const Login = () => {
       });
 
       if (data.success) {
-        console.log("data : ", data);
         Cookies.set("JWT", "data?.token");
         dispatch(authAction.Login);
         navigate("/home");
@@ -36,7 +35,7 @@ const Login = () => {
     }
   };
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    alert.log("Failed:", errorInfo);
   };
   return (
     <>

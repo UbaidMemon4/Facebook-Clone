@@ -1,6 +1,7 @@
 const UserModal = require("../Modal/userModal");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
+const jwt = require("jsonwebtoken");
 
 //make a transporter for mail send
 const transporter = nodemailer.createTransport({
@@ -36,12 +37,13 @@ exports.registerController = async (req, res) => {
       <div>Your verification OTP is ${VerificationOtp} <br/>
       Please do not share the OTP with unknown people.<div/>`,
     });
-    //save new user
-    return res.status(201).send({
-      success: true,
-      message: "New User Created Verification OTP Send Succesfully",
-      VerificationOtp,
-    });
+    if (info) {
+      return res.status(201).send({
+        success: true,
+        message: "New User Created Verification OTP Send Succesfully",
+        VerificationOtp,
+      });
+    }
   } catch (error) {
     return res.status(500).send({
       message: "Error In Register CallBack",
@@ -51,7 +53,6 @@ exports.registerController = async (req, res) => {
   }
 };
 exports.registerControllerOtp = async (req, res) => {
-  console.log("req.body", req.body);
   try {
     const {
       firstname,
@@ -76,14 +77,14 @@ exports.registerControllerOtp = async (req, res) => {
     ) {
       return res.status(400).send({
         success: false,
-        message: "please fields all blanks",
+        message: "Please fill in all fields",
       });
     }
     //otp verification
-    if (otp == VerificationOtp) {
+    if (otp !== VerificationOtp) {
       return res.status(400).send({
         success: false,
-        message: "OTP Not Matched",
+        message: "OTP does not match",
       });
     }
     //hashed password
@@ -106,7 +107,7 @@ exports.registerControllerOtp = async (req, res) => {
   } catch (error) {
     console.log(error, "error form register user");
     return res.status(500).send({
-      message: "Error In Register CallBack",
+      message: "Error in registration callBack",
       success: false,
       error,
     });
@@ -120,14 +121,14 @@ exports.getAllUsers = async (req, res) => {
     return res.status(200).send({
       userCount: users.length,
       success: true,
-      message: "Get All User Suceesfully",
+      message: "Retrieved all users successfully",
       users,
     });
   } catch (error) {
     console.log(error);
     return res.status(500).res.send({
       success: false,
-      message: "erroe in get all user",
+      message: "Error in retrieving all users",
       error,
     });
   }
@@ -140,7 +141,7 @@ exports.loginUsers = async (req, res) => {
     if (!email || !password) {
       return res.status(401).send({
         success: false,
-        message: "Please Provide Email or Password",
+        message: "Please provide email or password",
       });
     }
     //email check
@@ -148,7 +149,7 @@ exports.loginUsers = async (req, res) => {
     if (!user) {
       return res.status(200).send({
         success: false,
-        message: "Email is not Registerd",
+        message: "Email is not registerd",
       });
     }
     //password check
@@ -156,19 +157,73 @@ exports.loginUsers = async (req, res) => {
     if (!isMatch) {
       return res.status(401).send({
         success: false,
-        message: "Invalid Username or Password",
+        message: "Invalid email or password",
       });
     }
-    return res.status(200).send({
-      success: true,
-      message: "Login Succesfully",
-      user,
+
+    // Generate JWT token with expiration time
+    const token = jwt.sign({}, process.env.SECRET_KEY, {
+      expiresIn: "30d", // 30 days
     });
+    if (token) {
+      return res.status(200).send({
+        success: true,
+        message: "Login Succesfully",
+        user,
+        token,
+      });
+    }
   } catch (error) {
     console.log(error);
     return res.status(500).send({
       success: false,
       message: "Error in login callback",
+      error,
+    });
+  }
+};
+exports.forgetPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    // Validate email
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide an email address",
+      });
+    }
+    //generate otp
+    const ForgetOtp = Math.floor(1000 + Math.random() * 9000);
+    // Update user's OTP
+    const otpSave = await UserModal.findOneAndUpdate(
+      { email: email }, // Query
+      { otp: ForgetOtp } // Update
+    );
+
+    if (!otpSave) {
+      return res.status(200).send({
+        success: false,
+        message: "Email is not Registered",
+      });
+    }
+    //send mail
+    const info = await transporter.sendMail({
+      from: "Ubaidasif510@gmail.com",
+      to: email,
+      subject: "Forget Password OTP",
+      html: `
+  <div>Your Forget Password OTP is ${ForgetOtp} <br/>
+  Please do not share the OTP with unknown people.<div/>`,
+    });
+    return res.status(201).send({
+      success: true,
+      message: "Forget Password OTP Send Succesfully",
+      email,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      success: false,
+      message: "Something Went Wrong..",
       error,
     });
   }

@@ -4,6 +4,7 @@ const {
   getAllUsers,
   loginUsers,
   registerControllerOtp,
+  forgetPassword,
 } = require("../controller/userController");
 
 // router object
@@ -20,4 +21,8 @@ router.get("/all-users", getAllUsers);
 
 //Login USer || Post
 router.post("/login", loginUsers);
+
+//Forget Password || Send OTP || Post
+router.post("/forget-password", forgetPassword);
+
 module.exports = router;

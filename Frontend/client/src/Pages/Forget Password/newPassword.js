@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../../constent";
 import { Button, Form, Input } from "antd";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import LoginHeader from "../../component/LoginHeader/loginHeader";
-
-import Cookies from "js-cookie";
 import { useSelector } from "react-redux";
+import Cookies from "js-cookie";
 
 const NewPassword = () => {
+  const [email, setEmail] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     document.title = `New Password || Facebook`;
@@ -17,13 +17,13 @@ const NewPassword = () => {
     if (token) {
       navigate("/page-not-found");
     }
-  });
-  const userEmail = useSelector((e) => e.auth.ForgetEmail);
-  console.log("userEmail=>", userEmail);
+  }, [navigate]);
+  setEmail(useSelector((state) => state.auth.ForgetEmail));
+  console.log("userEmail=>", email);
   const onFinish = async (values) => {
     try {
-      const { data } = await axios.post(`${BASE_URL}/forget/new-password`, {
-        email: userEmail,
+      const { data } = await axios.post(`${BASE_URL}/user/new-password`, {
+        email: email,
         otp: values.otp,
         password: values.password,
       });
@@ -73,7 +73,7 @@ const NewPassword = () => {
                 Set New Password
               </h1>
               <p className="ml-4">
-                Your Forget Password Email Is : <b>{userEmail}</b>
+                Your Forget Password Email Is : <b>{email}</b>
               </p>
               <hr />
               <br />
