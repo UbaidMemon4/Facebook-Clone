@@ -25,4 +25,7 @@ router.post("/login", loginUsers);
 //Forget Password || Send OTP || Post
 router.post("/forget-password", forgetPassword);
 
+//Forget Password ||  New Password || Post
+router.post("/new-password", forgetPassword);
+
 module.exports = router;

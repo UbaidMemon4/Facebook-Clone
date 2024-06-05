@@ -228,3 +228,48 @@ exports.forgetPassword = async (req, res) => {
     });
   }
 };
+
+exports.newPassword = async (req, res) => {
+  try {
+    const { email, otp, password } = req.body;
+    // Validate data
+    if (!email || !otp || password) {
+      return res.status(401).json({
+        success: false,
+        message: "Please provide data",
+      });
+    }
+    //Find User
+    const user = await UserModal.findOne({ email });
+    if (!user) {
+      return res.status(200).send({
+        success: false,
+        message: "User not found",
+      });
+    }
+    if (user.otp !== otp) {
+      return res.status(401).send({
+        success: false,
+        message: "OTP not matched",
+      });
+    }
+    //hashed password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const passwordUpdated = await UserModal.findOneAndUpdate(
+      { email: email }, // Query
+      { password: hashedPassword } // Update
+    );
+    if (passwordUpdated) {
+      return res.status(201).send({
+        success: true,
+        message: "Password updated succesfully",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+};
