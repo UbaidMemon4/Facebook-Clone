@@ -7,6 +7,7 @@ import { BASE_URL } from "../../constent/index";
 import { Button, Form, Input } from "antd";
 import { authAction } from "../../Redux/store";
 import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
 
 const ForgettenPassword = () => {
   const navigate = useNavigate();
@@ -16,16 +17,16 @@ const ForgettenPassword = () => {
     const token = Cookies.get("JWT", "data?.token");
 
     if (token) {
-      navigate("/page-not-found");
+      navigate("/home");
     }
-  }, []);
+  }, [navigate]);
   const onFinish = async (values) => {
     try {
       const { data } = await axios.post(`${BASE_URL}/user/forget-password`, {
         email: values.email,
       });
       if (data.success) {
-        alert(data.message);
+        toast(data.message);
         dispatch(authAction.ForgetEmail(data.email));
         navigate("/newpassword");
       }

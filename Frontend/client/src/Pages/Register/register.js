@@ -13,8 +13,10 @@ import {
 } from "antd";
 import Cookies from "js-cookie";
 import { BASE_URL } from "../../constent/index";
-const { Title } = Typography;
+import toast from "react-hot-toast";
+
 const Signup = () => {
+  const { Title } = Typography;
   const [verificationOtp, setVerificationOtp] = useState("");
   const [user, setUser] = useState({
     firstname: "",
@@ -30,7 +32,7 @@ const Signup = () => {
     const token = Cookies.get("JWT", "data?.token");
 
     if (token) {
-      navigate("/page-not-found");
+      navigate("/home");
     }
   });
   const navigate = useNavigate();
@@ -54,7 +56,7 @@ const Signup = () => {
         VerificationOtp: verificationOtp,
       });
       if (data.success) {
-        alert(data.message);
+        toast(data.message);
         setIsModalOpen(false);
         navigate("/login");
       }

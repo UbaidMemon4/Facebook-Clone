@@ -260,7 +260,7 @@ exports.newPassword = async (req, res) => {
       { password: hashedPassword } // Update
     );
     if (passwordUpdated) {
-      return res.status(201).send({
+       return res.status(201).send({
         success: true,
         message: "Password updated succesfully",
       });

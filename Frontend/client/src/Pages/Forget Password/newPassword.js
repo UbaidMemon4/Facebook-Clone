@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import LoginHeader from "../../component/LoginHeader/loginHeader";
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
+import toast from "react-hot-toast";
 
 const NewPassword = () => {
   const [email, setEmail] = useState("");
@@ -13,13 +14,11 @@ const NewPassword = () => {
   useEffect(() => {
     document.title = `New Password || Facebook`;
     const token = Cookies.get("JWT", "data?.token");
-
     if (token) {
-      navigate("/page-not-found");
+      navigate("/home");
     }
   }, [navigate]);
   setEmail(useSelector((state) => state.auth.ForgetEmail));
-  console.log("userEmail=>", email);
   const onFinish = async (values) => {
     try {
       const { data } = await axios.post(`${BASE_URL}/user/new-password`, {
@@ -28,7 +27,7 @@ const NewPassword = () => {
         password: values.password,
       });
       if (data.success) {
-        alert(data.message);
+        toast(data.message);
         navigate("/login");
       }
     } catch (error) {

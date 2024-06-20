@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { Button, Form, Input } from "antd";
 import { BASE_URL } from "../../constent/index";
 import { authAction } from "../../Redux/store";
+import toast from "react-hot-toast";
 
 const LoginHeader = () => {
   const navigate = useNavigate();
@@ -19,24 +20,24 @@ const LoginHeader = () => {
       });
       if (data.success) {
         localStorage.setItem("userId", data?.user._id);
-        Cookies.set('JWT', 'data?.token')
+        Cookies.set("JWT", "data?.token");
         dispatch(authAction.Login);
         navigate("/home");
+        toast(data.message);
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data.message);
     }
   };
   const onFinishFailed = (errorInfo) => {
     alert(errorInfo.response.data.message);
-
   };
 
   return (
     <div className="flex align-middle justify-between shadow-gray-800 w-100% pr-12">
       <div>
-        <img 
-onClick={() => navigate("/login")}
+        <img
+          onClick={() => navigate("/login")}
           className="mt-1 h-12 cursor-pointer"
           src="https://static.xx.fbcdn.net/rsrc.php/y1/r/4lCu2zih0ca.svg"
           alt="Facebook"

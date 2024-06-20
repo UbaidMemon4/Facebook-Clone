@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { Button, Form, Input } from "antd";
 import { BASE_URL } from "../../constent/index";
 import { authAction } from "../../Redux/store";
+import toast from "react-hot-toast";
 
 const Login = () => {
   useEffect(() => {
@@ -13,7 +14,7 @@ const Login = () => {
     const token = Cookies.get("JWT", "data?.token");
 
     if (token) {
-      navigate("/page-not-found");
+      navigate("/home");
     }
   });
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const Login = () => {
       });
 
       if (data.success) {
+        toast(data.message);
         Cookies.set("JWT", "data?.token");
         dispatch(authAction.Login);
         navigate("/home");

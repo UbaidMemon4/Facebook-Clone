@@ -12,7 +12,7 @@ const Home = () => {
     const token = Cookies.get("JWT", "data?.token");
 
     if (!token) {
-      navigate("/page-not-found");
+      navigate("/login");
     }
   }, [navigate]);
   return (
