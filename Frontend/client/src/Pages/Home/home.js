@@ -17,12 +17,15 @@ const Home = () => {
   }, [navigate]);
   return (
     <>
-      <div>
-        <div className="h-10">
-          <LogoutHeader />
-        </div>
+      <div className="h-10">
+        <LogoutHeader />
       </div>
-      <SkeletonImage />
+      <div></div>
+      <div className="mt-10 mx-4">
+        <SkeletonImage />
+        <br />
+        <SkeletonImage />
+      </div>
     </>
   );
 };

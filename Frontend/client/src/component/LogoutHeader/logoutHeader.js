@@ -42,25 +42,25 @@ const LogoutHeader = () => {
       <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
         <Tabs value={value} onChange={handleChange} centered>
           <Popover content="Home">
-            <Tab label={<HomeOutlined />} className="c-blue " />
+            <Tab label={<HomeOutlined />} />
           </Popover>
 
-          <Popover content="Home">
-            <Tab label={<UsergroupAddOutlined />} className="c-blue " />
+          <Popover content="Facebook Clone Users">
+            <Tab label={<UsergroupAddOutlined />} />
           </Popover>
 
           <Popover content="Message">
-            <Tab label={<MessageOutlined />} className="c-blue " />
+            <Tab label={<MessageOutlined />} />
           </Popover>
 
           <Popover content="Profile">
-            <Tab label={<UserOutlined />} className="c-blue" />
+            <Tab label={<UserOutlined />} />
           </Popover>
         </Tabs>
       </Box>
       <div className="w-12 py-3 c-blue>">
         <Popover
-          className=" text-3xl cursor-pointer"
+          className="text-blue-600 text-3xl cursor-pointer"
           content="Logout"
           onClick={logout}
         >
