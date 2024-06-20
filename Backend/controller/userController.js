@@ -236,7 +236,7 @@ exports.newPassword = async (req, res) => {
     if (!email || !otp || password) {
       return res.status(401).json({
         success: false,
-        message: "Please provide data",
+        message: "Please provide all required data",
       });
     }
     //Find User
