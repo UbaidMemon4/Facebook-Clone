@@ -27,13 +27,13 @@ const Login = () => {
       });
 
       if (data.success) {
-        toast(data.message);
+        toast.success(data.message);
         Cookies.set("JWT", "data?.token");
         dispatch(authAction.Login);
         navigate("/home");
       }
     } catch (error) {
-      alert(error.response.data.message);
+      toast.error(error.response.data.message);
     }
   };
   const onFinishFailed = (errorInfo) => {

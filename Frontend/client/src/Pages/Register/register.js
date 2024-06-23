@@ -56,12 +56,12 @@ const Signup = () => {
         VerificationOtp: verificationOtp,
       });
       if (data.success) {
-        toast(data.message);
+        toast.success(data.message);
         setIsModalOpen(false);
         navigate("/login");
       }
     } catch (error) {
-      alert(error.response.data.message);
+      toast.error(error.response.data.message);
     }
   };
   const sharedProps = {

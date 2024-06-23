@@ -9,16 +9,24 @@ import Cookies from "js-cookie";
 import toast from "react-hot-toast";
 
 const NewPassword = () => {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState();
   const navigate = useNavigate();
-  useEffect(() => {
-    document.title = `New Password || Facebook`;
-    const token = Cookies.get("JWT", "data?.token");
-    if (token) {
-      navigate("/home");
-    }
-  }, [navigate]);
-  setEmail(useSelector((state) => state.auth.ForgetEmail));
+  const em = useSelector((state) => state?.forgetEmail);
+  useEffect(
+    () => {
+      document.title = `New Password || Facebook`;
+      const token = Cookies.get("JWT", "data?.token");
+      if (token) {
+        navigate("/home");
+      }
+      if (em) {
+        setEmail(em);
+      }
+    },
+    [navigate],
+    [em]
+  );
+
   const onFinish = async (values) => {
     try {
       const { data } = await axios.post(`${BASE_URL}/user/new-password`, {
@@ -27,11 +35,11 @@ const NewPassword = () => {
         password: values.password,
       });
       if (data.success) {
-        toast(data.message);
+        toast.success(data.message);
         navigate("/login");
       }
     } catch (error) {
-      alert(error.response.data.message);
+      toast.error(error.response.data.message);
     }
   };
   const onFinishFailed = (errorInfo) => {
@@ -40,7 +48,7 @@ const NewPassword = () => {
 
   return (
     <>
-      <LoginHeader />
+      {/* <LoginHeader /> */}
       <hr />
       <div className="bg-gray-200 py-16 flex justify-center">
         <div>

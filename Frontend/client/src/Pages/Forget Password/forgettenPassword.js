@@ -26,12 +26,12 @@ const ForgettenPassword = () => {
         email: values.email,
       });
       if (data.success) {
-        toast(data.message);
+        toast.success(data.message);
         dispatch(authAction.ForgetEmail(data.email));
         navigate("/newpassword");
       }
     } catch (error) {
-      alert(error.response.data.message);
+      toast.error(error.response.data.message);
     }
   };
   const onFinishFailed = (errorInfo) => {

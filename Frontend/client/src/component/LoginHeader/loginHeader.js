@@ -23,10 +23,10 @@ const LoginHeader = () => {
         Cookies.set("JWT", "data?.token");
         dispatch(authAction.Login);
         navigate("/home");
-        toast(data.message);
+        toast.success(data.message);
       }
     } catch (error) {
-      console.log(error.response.data.message);
+      toast.error(error.response.data.message);
     }
   };
   const onFinishFailed = (errorInfo) => {
@@ -46,7 +46,7 @@ const LoginHeader = () => {
       <div>
         <Form
           className="flex justify-between"
-          name="basic"
+          name="login-form"
           labelCol={{
             span: 8,
           }}

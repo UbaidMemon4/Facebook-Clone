@@ -2,12 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const Connectdb = require("./config/db");
+//router import
+const userRoutes = require("./Route/userRoute");
 
 //env config
 dotenv.config();
-
-//router import
-const userRoutes = require("./Route/userRoute");
 
 //mongodb comnnection
 Connectdb();

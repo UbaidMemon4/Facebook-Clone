@@ -197,9 +197,10 @@ exports.forgetPassword = async (req, res) => {
     // Update user's OTP
     const otpSave = await UserModal.findOneAndUpdate(
       { email: email }, // Query
-      { otp: ForgetOtp } // Update
+      { otp: ForgetOtp }, // Update
+      { new: true }
     );
-
+    console.log("otpSave=>", otpSave);
     if (!otpSave) {
       return res.status(200).send({
         success: false,
@@ -232,8 +233,9 @@ exports.forgetPassword = async (req, res) => {
 exports.newPassword = async (req, res) => {
   try {
     const { email, otp, password } = req.body;
+    console.log("req.body=>", req.body);
     // Validate data
-    if (!email || !otp || password) {
+    if (!email || !otp || !password) {
       return res.status(401).json({
         success: false,
         message: "Please provide all required data",
@@ -241,6 +243,7 @@ exports.newPassword = async (req, res) => {
     }
     //Find User
     const user = await UserModal.findOne({ email });
+    console.log("user=>", user);
     if (!user) {
       return res.status(200).send({
         success: false,
@@ -250,26 +253,34 @@ exports.newPassword = async (req, res) => {
     if (user.otp !== otp) {
       return res.status(401).send({
         success: false,
-        message: "OTP not matched",
+        message: "OTP mismatch",
       });
     }
     //hashed password
     const hashedPassword = await bcrypt.hash(password, 10);
+    console.log("hashedPassword=>", hashedPassword);
     const passwordUpdated = await UserModal.findOneAndUpdate(
       { email: email }, // Query
-      { password: hashedPassword } // Update
+      { password: hashedPassword }, // Update
+      { new: true }
     );
+    console.log("passwordUpdated=>", passwordUpdated);
     if (passwordUpdated) {
-       return res.status(201).send({
+      return res.status(201).send({
         success: true,
         message: "Password updated succesfully",
       });
+    } else {
+      return res.status(500).json({
+        success: false,
+        message: "Failed to update password",
+      });
     }
   } catch (error) {
-    console.log(error);
-    return res.status(500).send({
+    console.error(error);
+    return res.status(500).json({
       success: false,
-      message: "Something went wrong",
+      message: "Internal server error",
     });
   }
 };

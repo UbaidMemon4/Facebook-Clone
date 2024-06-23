@@ -16,17 +16,17 @@ const Home = () => {
     }
   }, [navigate]);
   return (
-    <>
-      <div className="h-10">
+    <div className="bg-login-bg h-full">
+      <div className="h-10 ">
         <LogoutHeader />
       </div>
       <div></div>
-      <div className="mt-10 mx-4">
+      <div className="py-10 mx-4">
         <SkeletonImage />
         <br />
         <SkeletonImage />
       </div>
-    </>
+    </div>
   );
 };
 

@@ -23,12 +23,12 @@ const LogoutHeader = () => {
   };
   const logout = () => {
     Cookies.remove("JWT");
-    toast("Logout Succesfully");
+    toast.success("Logout Succesfully");
     navigate("/login");
   };
 
   return (
-    <div className="flex justify-between flex-nowrap px-8 ">
+    <div className="flex justify-between flex-nowrap px-8 bg-white">
       <div className="w-12 py-1">
         <Popover content="Home">
           <img
@@ -41,21 +41,13 @@ const LogoutHeader = () => {
       </div>
       <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
         <Tabs value={value} onChange={handleChange} centered>
-          <Popover content="Home">
-            <Tab label={<HomeOutlined />} />
-          </Popover>
+          <Tab label={<HomeOutlined />} />
 
-          <Popover content="Facebook Clone Users">
-            <Tab label={<UsergroupAddOutlined />} />
-          </Popover>
+          <Tab label={<UsergroupAddOutlined />} />
 
-          <Popover content="Message">
-            <Tab label={<MessageOutlined />} />
-          </Popover>
+          <Tab label={<MessageOutlined />} />
 
-          <Popover content="Profile">
-            <Tab label={<UserOutlined />} />
-          </Popover>
+          <Tab label={<UserOutlined />} />
         </Tabs>
       </Box>
       <div className="w-12 py-3 c-blue>">
