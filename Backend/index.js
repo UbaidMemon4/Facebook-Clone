@@ -2,8 +2,10 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const Connectdb = require("./config/db");
+
 //router import
 const userRoutes = require("./Route/userRoute");
+const blogRoutes = require("./Route/blogRoute");
 
 //env config
 dotenv.config();
@@ -20,6 +22,7 @@ app.use(express.json());
 
 //routes
 app.use("/user", userRoutes);
+app.use("/blog", blogRoutes);
 
 //Port
 const port = process.env.PORT || 3001;

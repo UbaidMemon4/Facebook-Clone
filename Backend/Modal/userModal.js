@@ -30,6 +30,12 @@ const UserSchema = new mongoose.Schema(
       type: String,
       require: [true, "otp is requried"],
     },
+    blogs: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Blog",
+      },
+    ],
   },
   { timestamps: true }
 );
