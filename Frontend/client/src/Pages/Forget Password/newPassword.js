@@ -14,7 +14,7 @@ const NewPassword = () => {
   useEffect(
     () => {
       document.title = `New Password || Facebook`;
-      const token = Cookies.get("JWT", "data?.token");
+      const token = Cookies.get("JWT");
       if (token) {
         navigate("/home");
       }

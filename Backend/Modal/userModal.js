@@ -30,6 +30,10 @@ const UserSchema = new mongoose.Schema(
       type: String,
       require: [true, "otp is requried"],
     },
+    token: {
+      type: String,
+      require: [true, "token is requried"],
+    },
     blogs: [
       {
         type: mongoose.Types.ObjectId,

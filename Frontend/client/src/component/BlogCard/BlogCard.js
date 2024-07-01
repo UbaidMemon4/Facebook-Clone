@@ -35,16 +35,42 @@ const BlogCard = (blog) => {
       actions={[
         blog.isUser === ""
           ? [
-              <div className="flex justify-around  text-blue-500">
-                <LikeOutlined key="like" className="" />,
-                <CommentOutlined key="comment" />,
-                <DeleteOutlined key="delete" onClick={handleDelete} />,
-                <EditOutlined key="edit" onClick={handleEdit} />,
+              <div className="flex justify-around  cursor-context-menu">
+                <LikeOutlined
+                  className="text-blue-500 hover:text-gray-700 cursor-pointer"
+                  key="like"
+                />
+                ,
+                <CommentOutlined
+                  className="text-blue-500 hover:text-gray-700 cursor-pointer"
+                  key="comment"
+                />
+                ,
+                <DeleteOutlined
+                  className="text-blue-500 hover:text-gray-700 cursor-pointer"
+                  key="delete"
+                  onClick={handleDelete}
+                />
+                ,
+                <EditOutlined
+                  className="text-blue-500 hover:text-gray-700 cursor-pointer"
+                  key="edit"
+                  onClick={handleEdit}
+                />
+                ,
               </div>,
             ]
           : [
-              <div className="flex justify-around text-blue-500">
-                <LikeOutlined key="like" />, <CommentOutlined key="comment" />
+              <div className="flex justify-around cursor-context-menu">
+                <LikeOutlined
+                  key="like"
+                  className="text-blue-500 hover:text-gray-700 cursor-pointer"
+                />
+                ,{" "}
+                <CommentOutlined
+                  key="comment"
+                  className="text-blue-500 hover:text-gray-700 cursor-pointer"
+                />
               </div>,
             ],
       ]}

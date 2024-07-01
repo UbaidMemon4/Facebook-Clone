@@ -1,6 +1,7 @@
 const { default: mongoose } = require("mongoose");
 const blogModal = require("../Modal/blogModal");
 const UserModal = require("../Modal/userModal");
+const jwt = require("jsonwebtoken");
 
 //Get-All-Blogs
 exports.getAllBlogsContoller = async (req, res) => {
@@ -31,15 +32,16 @@ exports.getAllBlogsContoller = async (req, res) => {
 //Create-New-Blog
 exports.createBlogContoller = async (req, res) => {
   try {
-    const { title, image, user } = req.body;
+    const { title, image, token } = req.body;
     //user validation
-    if (!user) {
+    if (!token || !title) {
       return res.status(400).send({
         success: false,
         message: "Please Provide All Fields",
       });
     }
-    const existingUser = await UserModal.findById(user);
+
+    const existingUser = await UserModal.findOne({ token });
     if (!existingUser) {
       return res.status(404).send({
         success: false,
@@ -47,7 +49,7 @@ exports.createBlogContoller = async (req, res) => {
       });
     }
     // Create a new blog
-    const newBlog = new blogModal({ title, image, user });
+    const newBlog = new blogModal({ title, image, token });
 
     // Save the new blog
     await newBlog.save();

@@ -4,6 +4,7 @@ const blogSchema = new mongoose.Schema(
   {
     title: {
       type: String,
+      require: [true, "title is require"],
     },
     image: { type: String },
     user: {

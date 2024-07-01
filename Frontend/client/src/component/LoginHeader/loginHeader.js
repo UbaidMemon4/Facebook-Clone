@@ -20,7 +20,7 @@ const LoginHeader = () => {
       });
       if (data.success) {
         localStorage.setItem("userId", data?.user._id);
-        Cookies.set("JWT", "data?.token");
+        Cookies.set("JWT", data?.token);
         dispatch(authAction.Login);
         navigate("/home");
         toast.success(data.message);

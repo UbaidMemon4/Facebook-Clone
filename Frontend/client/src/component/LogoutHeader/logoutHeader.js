@@ -28,7 +28,7 @@ const LogoutHeader = () => {
   };
 
   return (
-    <div className="flex justify-between flex-nowrap px-8 bg-white">
+    <div className="flex justify-between  bg-white">
       <div className="w-12 py-1">
         <Popover content="Home">
           <img
@@ -39,7 +39,7 @@ const LogoutHeader = () => {
           />
         </Popover>
       </div>
-      <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
+      <Box>
         <Tabs value={value} onChange={handleChange} centered>
           <Tab label={<HomeOutlined />} onClick={() => navigate("/home")} />
           <Tab

@@ -165,7 +165,13 @@ exports.loginUsers = async (req, res) => {
     const token = jwt.sign({}, process.env.SECRET_KEY, {
       expiresIn: "30d", // 30 days
     });
+
     if (token) {
+      const tokenSave = await UserModal.findOneAndUpdate(
+        { email: email }, // Query
+        { token: token }, // Update
+        { new: true }
+      );
       return res.status(200).send({
         success: true,
         message: "Login Succesfully",

@@ -29,7 +29,7 @@ const Signup = () => {
 
   useEffect(() => {
     document.title = `Sign Up Or Create A New Account || Facebook`;
-    const token = Cookies.get("JWT", "data?.token");
+    const token = Cookies.get("JWT");
 
     if (token) {
       navigate("/home");

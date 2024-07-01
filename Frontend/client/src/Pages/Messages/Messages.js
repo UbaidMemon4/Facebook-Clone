@@ -8,7 +8,7 @@ const Messages = () => {
 
   useEffect(() => {
     document.title = `Messages || Facebook`;
-    const token = Cookies.get("JWT", "data?.token");
+    const token = Cookies.get("JWT");
 
     if (!token) {
       navigate("/login");

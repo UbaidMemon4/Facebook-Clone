@@ -8,7 +8,7 @@ const Users = () => {
 
   useEffect(() => {
     document.title = `Find User || Facebook`;
-    const token = Cookies.get("JWT", "data?.token");
+    const token = Cookies.get("JWT");
 
     if (!token) {
       navigate("/login");
