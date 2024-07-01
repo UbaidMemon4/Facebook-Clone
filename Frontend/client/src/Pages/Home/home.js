@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import SkeletonImage from "../../component/Skeleton/skeleton";
 import LogoutHeader from "../../component/LogoutHeader/logoutHeader";
+import BlogCard from "../../component/BlogCard/BlogCard";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -20,11 +21,14 @@ const Home = () => {
       <div className="h-10 ">
         <LogoutHeader />
       </div>
-      <div></div>
-      <div className="py-10 mx-4">
-        <SkeletonImage />
-        <br />
-        <SkeletonImage />
+      <div className=" mx-4">
+        <div className="py-10 ">
+          <BlogCard />
+        </div>
+        <div>
+          <SkeletonImage />
+          <SkeletonImage />
+        </div>
       </div>
     </div>
   );

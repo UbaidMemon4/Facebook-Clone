@@ -8,15 +8,16 @@ import "./output.css";
 import Home from "./Pages/Home/home";
 import ForgettenPassword from "./Pages/Forget Password/forgettenPassword";
 import NewPassword from "./Pages/Forget Password/newPassword";
-import Error from "./component/Error/error";
 import Cookies from "js-cookie";
+import Profile from "./Pages/Profile/Profile";
+import Messages from "./Pages/Messages/Messages";
+import Users from "./Pages/Users/Users";
 
 const App = () => {
   return (
     <>
       <Toaster />
       <Routes>
-        <Route path="page-not-found" element={<Error />} />
         <Route
           path="/"
           element={Cookies.get("JWT", "data?.token") ? <Home /> : <Login />}
@@ -26,6 +27,9 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/newpassword" element={<NewPassword />} />
         <Route path="/forgetpassword" element={<ForgettenPassword />} />
+        <Route path="/my-profile" element={<Profile />} />
+        <Route path="/messages" element={<Messages />} />
+        <Route path="/users" element={<Users />} />
       </Routes>
     </>
   );

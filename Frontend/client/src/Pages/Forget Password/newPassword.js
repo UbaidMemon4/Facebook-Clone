@@ -3,7 +3,6 @@ import { BASE_URL } from "../../constent";
 import { Button, Form, Input } from "antd";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import LoginHeader from "../../component/LoginHeader/loginHeader";
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";

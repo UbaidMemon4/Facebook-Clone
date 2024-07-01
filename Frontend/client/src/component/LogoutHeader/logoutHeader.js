@@ -41,13 +41,19 @@ const LogoutHeader = () => {
       </div>
       <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
         <Tabs value={value} onChange={handleChange} centered>
-          <Tab label={<HomeOutlined />} />
-
-          <Tab label={<UsergroupAddOutlined />} />
-
-          <Tab label={<MessageOutlined />} />
-
-          <Tab label={<UserOutlined />} />
+          <Tab label={<HomeOutlined />} onClick={() => navigate("/home")} />
+          <Tab
+            label={<UsergroupAddOutlined />}
+            onClick={() => navigate("/users")}
+          />
+          <Tab
+            label={<MessageOutlined />}
+            onClick={() => navigate("/messages")}
+          />
+          <Tab
+            label={<UserOutlined />}
+            onClick={() => navigate("/my-profile")}
+          />
         </Tabs>
       </Box>
       <div className="w-12 py-3 c-blue>">
