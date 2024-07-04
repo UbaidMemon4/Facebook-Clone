@@ -543,10 +543,6 @@ video {
   position: fixed;
 }
 
-.m-28 {
-  margin: 7rem;
-}
-
 .mx-0 {
   margin-left: 0px;
   margin-right: 0px;
@@ -582,6 +578,11 @@ video {
   margin-bottom: 1.25rem;
 }
 
+.mx-10 {
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
+}
+
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -592,6 +593,10 @@ video {
 
 .mb-2 {
   margin-bottom: 0.5rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
 }
 
 .mb-7 {
@@ -674,8 +679,8 @@ video {
   margin-top: 1rem;
 }
 
-.mb-4 {
-  margin-bottom: 1rem;
+.mb-5 {
+  margin-bottom: 1.25rem;
 }
 
 .flex {
@@ -696,6 +701,10 @@ video {
 
 .h-16 {
   height: 4rem;
+}
+
+.h-2\/6 {
+  height: 33.333333%;
 }
 
 .h-24 {
@@ -732,10 +741,6 @@ video {
 
 .h-loginheight {
   height: 456px;
-}
-
-.h-2\/6 {
-  height: 33.333333%;
 }
 
 .w-100\% {
@@ -804,22 +809,6 @@ video {
 
 .w-signupWidth {
   width: 432px;
-}
-
-.w-60 {
-  width: 15rem;
-}
-
-.w-4\/5 {
-  width: 80%;
-}
-
-.w-3\/5 {
-  width: 60%;
-}
-
-.w-3\/4 {
-  width: 75%;
 }
 
 .cursor-context-menu {
@@ -978,6 +967,14 @@ video {
   padding-right: 3rem;
 }
 
+.pt-10 {
+  padding-top: 2.5rem;
+}
+
+.pt-16 {
+  padding-top: 4rem;
+}
+
 .pt-28 {
   padding-top: 7rem;
 }
@@ -988,10 +985,6 @@ video {
 
 .pt-6 {
   padding-top: 1.5rem;
-}
-
-.pt-10 {
-  padding-top: 2.5rem;
 }
 
 .text-center {

@@ -78,7 +78,7 @@ const BlogCard = (blog) => {
       ]}
     >
       <Meta
-        avatar={<Avatar src={blog.userName} />}
+        avatar={<Avatar>{blog.username}</Avatar>}
         title={blog.username}
         description={blog.description}
       />

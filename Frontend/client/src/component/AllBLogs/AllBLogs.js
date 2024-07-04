@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../constent";
-import BlogCard from "../../component/BlogCard/BlogCard";
-import Skeleton from "../../component/Skeleton/Skeleton";
+import BlogCard from "../BlogCard/BlogCard";
+import Skeleton from "../Skeleton/Skeleton";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 
