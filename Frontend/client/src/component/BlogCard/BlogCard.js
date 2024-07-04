@@ -26,14 +26,13 @@ const BlogCard = (blog) => {
       toast.error(error.response.data.message);
     }
   };
+  console.log("blog.isUser=>", blog);
   return (
     <Card
-      style={{
-        width: "100%",
-      }}
+      className="w-full mb-4"
       cover={blog?.image && <img alt="image" src={blog.image} />}
       actions={[
-        blog.isUser === ""
+        blog.isUser !== ""
           ? [
               <div className="flex justify-around  cursor-context-menu">
                 <LikeOutlined
@@ -75,15 +74,11 @@ const BlogCard = (blog) => {
             ],
       ]}
     >
-      {blog?.titel ? (
-        <Meta
-          avatar={<Avatar src={blog.userName} />}
-          title={blog.userName}
-          description={blog.title}
-        />
-      ) : (
-        <Meta avatar={<Avatar src={blog.userName} />} title={blog.userName} />
-      )}
+      <Meta
+        avatar={<Avatar src={blog.userName} />}
+        title={blog.username}
+        description={blog.description}
+      />
     </Card>
   );
 };

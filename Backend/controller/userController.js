@@ -172,6 +172,8 @@ exports.loginUsers = async (req, res) => {
         { token: token }, // Update
         { new: true }
       );
+      console.log("tokenSave", tokenSave);
+
       return res.status(200).send({
         success: true,
         message: "Login Succesfully",

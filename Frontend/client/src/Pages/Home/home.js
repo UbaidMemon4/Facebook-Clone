@@ -1,10 +1,9 @@
 import { useEffect } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import SkeletonImage from "../../component/Skeleton/skeleton";
 import LogoutHeader from "../../component/LogoutHeader/logoutHeader";
-import BlogCard from "../../component/BlogCard/BlogCard";
 import CreateBlog from "../CreateBlog/CreateBlog";
+import AllBLogs from "../AllBLogs/AllBLogs";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -19,19 +18,15 @@ const Home = () => {
   }, [navigate]);
   return (
     <div className="bg-login-bg h-full">
-      <div className="h-10 ">
+      <div className="w-full h-10 fixed">
         <LogoutHeader />
       </div>
-      <div>
+      <div className="pt-10">
         <CreateBlog />
       </div>
       <div className=" mx-4">
         <div className="py-10 ">
-          <BlogCard />
-        </div>
-        <div>
-          <SkeletonImage />
-          <SkeletonImage />
+          <AllBLogs />
         </div>
       </div>
     </div>

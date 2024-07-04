@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 exports.getAllBlogsContoller = async (req, res) => {
   try {
     const blogs = await blogModal.find({}).populate("user");
+
     if (!blogs) {
       return res.status(400).send({
         success: false,
@@ -20,7 +21,6 @@ exports.getAllBlogsContoller = async (req, res) => {
       blogs,
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).send({
       success: false,
       message: "Error While Getting All Blogs",
