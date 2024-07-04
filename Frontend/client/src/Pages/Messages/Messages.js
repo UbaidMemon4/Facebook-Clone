@@ -19,7 +19,7 @@ const Messages = () => {
       <div className="w-full h-10 fixed">
         <LogoutHeader />
       </div>
-      <div className="pt-10">This Feature is Availake soon</div>
+      <div className="pt-16">This Feature is Availake soon</div>
     </div>
   );
 };
