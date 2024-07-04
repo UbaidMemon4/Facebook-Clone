@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import LogoutHeader from "../../component/LogoutHeader/logoutHeader";
-import CreateBlog from "../CreateBlog/CreateBlog";
-import AllBLogs from "../AllBLogs/AllBLogs";
+import CreateBlog from "../../component/CreateBlog/CreateBlog";
+import AllBLogs from "../../component/AllBLogs/AllBLogs";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -24,10 +24,8 @@ const Home = () => {
       <div className="pt-10">
         <CreateBlog />
       </div>
-      <div className=" mx-4">
-        <div className="py-10 ">
-          <AllBLogs />
-        </div>
+      <div className="py-10 mx-28 content-center">
+        <AllBLogs />
       </div>
     </div>
   );

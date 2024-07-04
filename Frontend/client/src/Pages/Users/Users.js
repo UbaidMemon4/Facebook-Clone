@@ -16,9 +16,10 @@ const Users = () => {
   }, [navigate]);
   return (
     <div>
-      <div className="h-10 ">
+      <div className="w-full -10 fixed">
         <LogoutHeader />
       </div>
+      <div className="pt-10"></div>
     </div>
   );
 };

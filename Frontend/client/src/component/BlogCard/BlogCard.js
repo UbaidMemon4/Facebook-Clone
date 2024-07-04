@@ -26,13 +26,16 @@ const BlogCard = (blog) => {
       toast.error(error.response.data.message);
     }
   };
-  console.log("blog.isUser=>", blog);
   return (
     <Card
       className="w-full mb-4"
-      cover={blog?.image && <img alt="image" src={blog.image} />}
+      cover={
+        blog?.image && (
+          <img className="w-full h-2/6" alt="image" src={blog.image} />
+        )
+      }
       actions={[
-        blog.isUser !== ""
+        blog.isUser === ""
           ? [
               <div className="flex justify-around  cursor-context-menu">
                 <LikeOutlined

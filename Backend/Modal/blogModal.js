@@ -10,7 +10,6 @@ const blogSchema = new mongoose.Schema(
     user: {
       type: mongoose.Types.ObjectId,
       ref: "User",
-      require: [true, "user id is require"],
     },
   },
   { timestamps: true }

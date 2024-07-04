@@ -145,7 +145,8 @@ exports.deleteBlogContoller = async (req, res) => {
 //Get-User-Blogs
 exports.userBlogContoller = async (req, res) => {
   try {
-    const userBlog = await UserModal.findById(req.params.id).populate("blogs");
+    const { token } = req.params;
+    const userBlog = await UserModal.findOne({ token }).populate("blogs");
     if (!userBlog) {
       res.status(404).send({
         success: false,

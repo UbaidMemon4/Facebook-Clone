@@ -24,21 +24,19 @@ const AllBLogs = () => {
     getAllBlog();
   }, []);
   return (
-    <div>
-      {console.log(blogs)}
+    <div className="w-full">
       {blogs ? (
         blogs.map((blog) => {
           return (
-            <>
+            <div key={blog._id}>
               <BlogCard
-                // title={blog?.user?.}
                 description={blog?.title}
                 image={blog?.image}
                 username={blog?.user?.firstname}
                 isUser={Cookies.get("JWT") === blog?.user?.token}
                 id={blog?._id}
               />
-            </>
+            </div>
           );
         })
       ) : (
