@@ -10,6 +10,7 @@ import {
   Input,
   Modal,
   Radio,
+  Spin,
 } from "antd";
 import Cookies from "js-cookie";
 import { BASE_URL } from "../../constent/index";
@@ -39,11 +40,12 @@ const Signup = () => {
   const [form] = Form.useForm();
   const currentDate = new Date().toDateString();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [spin, setSpin] = useState(false);
   const onModalClose = () => {
     setIsModalOpen(false);
   };
   const onChange = async (text) => {
-    console.log("onChange:", user);
+    setSpin(true);
     try {
       const { data } = await axios.post(`${BASE_URL}/user/register-otp`, {
         email: user?.email,
@@ -59,8 +61,10 @@ const Signup = () => {
         toast.success(data.message);
         setIsModalOpen(false);
         navigate("/login");
+        setSpin(false);
       }
     } catch (error) {
+      setSpin(false);
       toast.error(error.response.data.message);
     }
   };
@@ -68,6 +72,7 @@ const Signup = () => {
     onChange,
   };
   const onFinish = async (values) => {
+    setSpin(true);
     setUser({
       firstname: values.firstname,
       Surname: values.Surname,
@@ -76,23 +81,22 @@ const Signup = () => {
       dateofbirth: values.dateofbirth.$d.getDate(),
       gender: values.radiogroup,
     });
-    setIsModalOpen(true);
     try {
       const { data } = await axios.post(`${BASE_URL}/user/register`, {
         email: values.email,
       });
       if (data.success) {
-        alert(data.message);
+        setSpin(false);
+        toast.success(data.message);
         setVerificationOtp(data.VerificationOtp);
         setIsModalOpen(true);
       }
     } catch (error) {
-      alert(error.response.data.message);
+      toast.error(error.response.data.message);
+      setSpin(false);
     }
   };
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
+
   return (
     <div className="bg-login-bg ">
       <div className=" flex justify-center ">
@@ -117,7 +121,6 @@ const Signup = () => {
               remember: true,
             }}
             onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
             autoComplete="off"
           >
             <h1 className="text-2xl">
@@ -260,6 +263,7 @@ const Signup = () => {
               htmlType="submit"
             >
               Verify Email
+              {spin === true ? <Spin /> : ""}
             </Button>
             <Modal open={isModalOpen} onCancel={onModalClose} footer={null}>
               <Flex gap="middle" align="flex-start" vertical>
@@ -267,11 +271,14 @@ const Signup = () => {
                 <p>
                   The Verification email is : <b>{user.email}</b>
                 </p>
-                <Input.OTP
-                  length={4}
-                  formatter={(str) => str.toUpperCase()}
-                  {...sharedProps}
-                />
+                <div className="flex ">
+                  <Input.OTP
+                    length={4}
+                    formatter={(str) => str.toUpperCase()}
+                    {...sharedProps}
+                  />
+                  {spin === true ? <Spin /> : ""}
+                </div>
               </Flex>
             </Modal>
             <p

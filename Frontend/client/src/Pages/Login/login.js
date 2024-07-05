@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Spin } from "antd";
 import { BASE_URL } from "../../constent/index";
 import { authAction } from "../../Redux/store";
 import toast from "react-hot-toast";
 
 const Login = () => {
+  const [spin, setSpin] = useState(false);
+
   useEffect(() => {
     document.title = `Login Your Acccount || Facebook`;
     const token = Cookies.get("JWT", "data?.token");
@@ -20,36 +22,36 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const onFinish = async (values) => {
+    setSpin(true);
     try {
       const { data } = await axios.post(`${BASE_URL}/user/login`, {
         email: values.email,
         password: values.password,
       });
-
       if (data.success) {
+        setSpin(false);
         toast.success(data.message);
         Cookies.set("JWT", data.token);
         dispatch(authAction.Login);
         navigate("/home");
       }
     } catch (error) {
+      setSpin(false);
       toast.error(error.response.data.message);
     }
   };
-  const onFinishFailed = (errorInfo) => {
-    alert.log("Failed:", errorInfo);
-  };
+
   return (
     <>
       <div className="bg-login-bg flex flex-wrap justify-around pt-28 pb-4 h-auto">
-        <div className="w-96 ml-10 mt-20">
+        <div className="w-96  mt-20">
           <div className="_8ice">
             <img
-              className="fb_logo _8ilh img pb-5 h-36 m-forLoginMargin"
+              className="pb-5 h-36"
               src="https://static.xx.fbcdn.net/rsrc.php/y1/r/4lCu2zih0ca.svg"
               alt="Facebook"
             />
-            <h2 className="_8eso text-xl w-loginWidth">
+            <h2 className="ml-8 text-xl w-loginWidth">
               Facebook helps you connect and share with the people in your life.
             </h2>
           </div>
@@ -69,7 +71,6 @@ const Login = () => {
                   remember: true,
                 }}
                 onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
                 autoComplete="off"
               >
                 <Form.Item
@@ -82,11 +83,10 @@ const Login = () => {
                   ]}
                 >
                   <Input
-                    className="w-270 ml-7"
+                    className="w-270 mx-3"
                     placeholder="Email address or phone number"
                   />
                 </Form.Item>
-
                 <Form.Item
                   name="password"
                   rules={[
@@ -98,10 +98,9 @@ const Login = () => {
                 >
                   <Input.Password
                     placeholder="Password"
-                    className="w-270 ml-7"
+                    className="w-270 mx-3"
                   />
                 </Form.Item>
-
                 <Form.Item
                   wrapperCol={{
                     offset: 8,
@@ -109,13 +108,14 @@ const Login = () => {
                   }}
                 >
                   <Button
-                    className="w-270 ml-nagative82 bg-forgotenPassword"
+                    className="w-270 ml-nagative87 bg-forgotenPassword"
                     type="primary"
                     htmlType="submit"
                   >
                     Log in
                   </Button>
                 </Form.Item>
+                {spin === true ? <Spin className="ml-36 mb-2" /> : ""}
                 <h1
                   className="text-forgotenPassword text-sm text-center font-medium cursor-pointer"
                   onClick={() => navigate("/forgetpassword")}
@@ -132,17 +132,6 @@ const Login = () => {
                   </Button>
                 </div>
               </Form>
-            </div>
-            <div className="my-2.5 mx-0.5">
-              <a
-                href="/login"
-                className="decoration-ignore-none text-black text-base "
-              >
-                <b> Create a Page </b>
-              </a>
-              <span className="text-sm">
-                for a celebrity, brand or business.
-              </span>
             </div>
           </div>
         </div>

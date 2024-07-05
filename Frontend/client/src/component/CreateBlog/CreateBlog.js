@@ -1,16 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { BASE_URL } from "../../constent/index";
 import Cookies from "js-cookie";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Spin } from "antd";
 
 const CreateBlog = () => {
+  const [spin, setSpin] = useState(false);
   const token = Cookies.get("JWT");
   const onFinish = async (values) => {
-    console.log(values);
-    // values.preventDefault();
+    setSpin(true);
     try {
       const { data } = await axios.post(`${BASE_URL}/blog/create-blog`, {
         title: values.title,
@@ -19,10 +18,12 @@ const CreateBlog = () => {
       });
 
       if (data.success) {
+        setSpin(false);
         toast.success("Blog Created ");
         window.location.reload();
       }
     } catch (error) {
+      setSpin(false);
       toast.error(error.response.data.message);
     }
   };
@@ -68,6 +69,7 @@ const CreateBlog = () => {
                 span: 16,
               }}
             >
+              {spin === true ? <Spin className="mr-4" /> : ""}
               <Button
                 className="w-auto bg-forgotenPassword"
                 type="primary"

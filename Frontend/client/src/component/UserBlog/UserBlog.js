@@ -14,6 +14,7 @@ const UserBlog = () => {
       const { data } = await axios.get(`${BASE_URL}/blog/user-blog/${token}`);
       if (data?.success) {
         setBlogs(data?.userBlog.blogs);
+        console.log("data=>", data);
       }
     } catch (error) {
       toast.error(

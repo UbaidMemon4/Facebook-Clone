@@ -12,7 +12,7 @@ module.exports = {
         silderColor: "#f0f2f5",
       },
       margin: {
-        nagative82: "-82px",
+        nagative87: "-87px",
         margin88: "88px",
         218: "218px",
         407: "407px",

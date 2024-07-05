@@ -153,13 +153,13 @@ exports.userBlogContoller = async (req, res) => {
         message: "Blog not found with this id",
       });
     }
+    console.log(userBlog);
     return res.status(200).send({
       success: true,
       message: "User Blog",
       userBlog,
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).send({
       success: false,
       message: "Error in user blog",

@@ -16,7 +16,7 @@ const Profile = () => {
     }
   }, [navigate]);
   return (
-    <div>
+    <div className="bg-login-bg h-full">
       <div className="w-full h-10 fixed">
         <LogoutHeader />
       </div>

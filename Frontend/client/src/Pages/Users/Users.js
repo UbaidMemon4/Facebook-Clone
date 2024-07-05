@@ -33,7 +33,7 @@ const Users = () => {
   }, [navigate]);
   console.log(user);
   return (
-    <div>
+    <div className="bg-login-bg h-full">
       <div className="w-full -10 fixed">
         <LogoutHeader />
       </div>
