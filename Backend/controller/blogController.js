@@ -145,20 +145,20 @@ exports.deleteBlogContoller = async (req, res) => {
 exports.userBlogContoller = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(req.params, "this is user");
     const token = id;
     const userBlog = await UserModal.findOne({ token });
+    const populatedUser = await UserModal.findOne({ token }).populate("blogs");
     if (!userBlog) {
       res.status(404).send({
         success: false,
         message: "Blog not found with this id",
       });
     }
-    console.log("userBlog=>", userBlog);
     return res.status(200).send({
       success: true,
       message: "User Blog",
       userBlog,
+      populatedUser,
     });
   } catch (error) {
     return res.status(500).send({

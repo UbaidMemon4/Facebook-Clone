@@ -33,10 +33,7 @@ const Users = () => {
   }, [navigate]);
   return (
     <div className="bg-login-bg h-full">
-      <div className="w-full -10 fixed">
-        <LogoutHeader />
-      </div>
-      <div className="pt-16">
+      <div className="pt-5">
         {user ? (
           user.map((users) => {
             return (

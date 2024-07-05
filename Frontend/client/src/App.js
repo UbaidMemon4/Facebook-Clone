@@ -12,16 +12,15 @@ import Cookies from "js-cookie";
 import Profile from "./Pages/Profile/Profile";
 import Messages from "./Pages/Messages/Messages";
 import Users from "./Pages/Users/Users";
+import HeaderAppjs from "./component/HeaderAppjs/HeaderAppjs";
 
 const App = () => {
   return (
     <>
+      <HeaderAppjs />
       <Toaster />
       <Routes>
-        <Route
-          path="/"
-          element={Cookies.get("JWT", "data?.token") ? <Home /> : <Login />}
-        />
+        <Route path="/" element={Cookies.get("JWT") ? <Home /> : <Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />

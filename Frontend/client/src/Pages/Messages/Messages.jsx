@@ -16,10 +16,7 @@ const Messages = () => {
   }, [navigate]);
   return (
     <div className="bg-login-bg h-full">
-      <div className="w-full h-10 fixed">
-        <LogoutHeader />
-      </div>
-      <div className="pt-16">This Feature is Availake soon</div>
+      <div className="py-10">Live messages Feature is Available soon.</div>
     </div>
   );
 };

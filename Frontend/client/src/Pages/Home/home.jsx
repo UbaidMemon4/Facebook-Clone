@@ -18,9 +18,6 @@ const Home = () => {
   }, [navigate]);
   return (
     <div className="bg-login-bg h-full">
-      <div className="w-full h-10 fixed">
-        <LogoutHeader />
-      </div>
       <div className="pt-10">
         <CreateBlog />
       </div>

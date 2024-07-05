@@ -8,13 +8,16 @@ import Cookies from "js-cookie";
 
 const UserBlog = () => {
   const [blogs, setBlogs] = useState([]);
+  const [populatedUser, setPopulatedUser] = useState([]);
+
   const getUserBlogs = async () => {
     const token = Cookies.get("JWT");
 
     try {
       const { data } = await axios.get(`${BASE_URL}/blog/user-blog/${token}`);
       if (data?.success) {
-        setBlogs(data.userBlog.blogs);
+        setBlogs(data.userBlog);
+        setPopulatedUser(data.populatedUser.blogs);
       }
     } catch (error) {
       toast.error(
@@ -25,22 +28,23 @@ const UserBlog = () => {
   useEffect(() => {
     getUserBlogs();
   }, []);
+  console.log(populatedUser);
   return (
     <div
       className="w-full mt
     -10"
     >
-      {blogs ? (
-        blogs.map((blog) => {
-          console.log("blog=>", blog);
+      {populatedUser ? (
+        populatedUser.map((blog) => {
+          console.log("blog=>", blogs);
           return (
             <div key={blog._id}>
               <BlogCard
                 description={blog?.title}
                 image={blog?.image}
-                username={blog?.user?.firstname}
+                username={blogs?.firstname}
                 isUser={true}
-                id={blog?._id}
+                id={blogs?._id}
               />
             </div>
           );
