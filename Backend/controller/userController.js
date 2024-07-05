@@ -167,7 +167,7 @@ exports.loginUsers = async (req, res) => {
     });
 
     if (token) {
-      const tokenSave = await UserModal.findOneAndUpdate(
+      await UserModal.findOneAndUpdate(
         { email: email }, // Query
         { token: token }, // Update
         { new: true }

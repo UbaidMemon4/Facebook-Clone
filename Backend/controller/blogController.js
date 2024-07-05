@@ -41,31 +41,30 @@ exports.createBlogContoller = async (req, res) => {
       });
     }
 
-    const existingUser = await UserModal.findOne({ token });
-    if (!existingUser) {
+    const user = await UserModal.findOne({ token });
+    if (!user) {
       return res.status(404).send({
         success: false,
         message: "unable to find user",
       });
     }
     // Create a new blog
-    const newBlog = new blogModal({ title, image, token });
+    const newBlog = new blogModal({ title, image, user });
 
     // Save the new blog
     await newBlog.save();
 
     // Add the new blog to the user's blogs array
-    existingUser.blogs.push(newBlog);
+    user.blogs.push(newBlog);
 
     // Save the updated user
-    await existingUser.save();
+    await user.save();
     return res.status(201).send({
       success: true,
       message: "Blog Created Sucessful",
       newBlog,
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).send({
       success: false,
       message: "Error While Creating Blog",
@@ -145,15 +144,17 @@ exports.deleteBlogContoller = async (req, res) => {
 //Get-User-Blogs
 exports.userBlogContoller = async (req, res) => {
   try {
-    const { token } = req.params;
-    const userBlog = await UserModal.findOne({ token }).populate("blogs");
+    const { id } = req.params;
+    console.log(req.params, "this is user");
+    const token = id;
+    const userBlog = await UserModal.findOne({ token });
     if (!userBlog) {
       res.status(404).send({
         success: false,
         message: "Blog not found with this id",
       });
     }
-    console.log(userBlog);
+    console.log("userBlog=>", userBlog);
     return res.status(200).send({
       success: true,
       message: "User Blog",

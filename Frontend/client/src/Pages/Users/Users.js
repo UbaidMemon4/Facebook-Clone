@@ -31,7 +31,6 @@ const Users = () => {
     }
     getAllUser();
   }, [navigate]);
-  console.log(user);
   return (
     <div className="bg-login-bg h-full">
       <div className="w-full -10 fixed">

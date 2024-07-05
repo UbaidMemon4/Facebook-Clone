@@ -10,15 +10,15 @@ const UserBlog = () => {
   const [blogs, setBlogs] = useState([]);
   const getUserBlogs = async () => {
     const token = Cookies.get("JWT");
+
     try {
       const { data } = await axios.get(`${BASE_URL}/blog/user-blog/${token}`);
       if (data?.success) {
-        setBlogs(data?.userBlog.blogs);
-        console.log("data=>", data);
+        setBlogs(data.userBlog.blogs);
       }
     } catch (error) {
       toast.error(
-        "Blog loading failed due to slow network. Please try again later."
+        "Blog loading failed due to slow network or user have no blog."
       );
     }
   };
@@ -30,8 +30,9 @@ const UserBlog = () => {
       className="w-full mt
     -10"
     >
-      {blogs.lenght > 0 ? (
+      {blogs ? (
         blogs.map((blog) => {
+          console.log("blog=>", blog);
           return (
             <div key={blog._id}>
               <BlogCard

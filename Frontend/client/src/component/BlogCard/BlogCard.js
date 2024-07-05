@@ -35,7 +35,7 @@ const BlogCard = (blog) => {
         )
       }
       actions={[
-        blog.isUser === ""
+        blog.isUser
           ? [
               <div className="flex justify-around  cursor-context-menu">
                 <LikeOutlined
