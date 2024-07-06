@@ -1,13 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { BASE_URL } from "../../constent/index";
 import Cookies from "js-cookie";
 import { Button, Form, Input, Spin } from "antd";
+import { useNavigate, useParams } from "react-router-dom";
 
 const CreateBlog = () => {
+  const navigate = useNavigate();
+  const [input, setInput] = useState({});
   const [spin, setSpin] = useState(false);
   const token = Cookies.get("JWT");
+  const paramsId = useParams().id;
+  const getBlogDetailForEdit = async () => {
+    try {
+      const { data } = await axios.get(`${BASE_URL}/blog/get-blog/${paramsId}`);
+      if (data?.success) {
+        // setInput(data);
+        setInput({
+          title: data?.blog?.title,
+          image: data?.blog?.image,
+          id: data?.blog?._id,
+        });
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
   const onFinish = async (values) => {
     setSpin(true);
     try {
@@ -27,7 +46,34 @@ const CreateBlog = () => {
       toast.error(error.response.data.message);
     }
   };
+  const onFinishEdit = async (values) => {
+    try {
+      const { data } = await axios.post(
+        `${BASE_URL}/blog/update-blog/${input.id}`,
+        {
+          title: input.title,
+          image: input.image,
+        }
+      );
 
+      if (data.success) {
+        setSpin(false);
+        toast.success("Blog Updated ");
+        window.location.reload();
+      }
+    } catch (error) {
+      setSpin(false);
+      toast.error(error.response.data.message);
+    }
+  };
+  useEffect(() => {
+    navigate("/home");
+    if (paramsId) {
+      getBlogDetailForEdit();
+    }
+  }, [navigate]);
+  let formFunction = input.id ? onFinishEdit : onFinish;
+  console.log("formFunction=>", formFunction);
   return (
     <div className="mt-10   ">
       <div className="text-center mx-28 bg-white  py-3 rounded-lg shadow-loginForm">
@@ -45,7 +91,7 @@ const CreateBlog = () => {
             initialValues={{
               remember: true,
             }}
-            onFinish={onFinish}
+            onFinish={formFunction}
             autoComplete="off"
           >
             <Form.Item
@@ -57,10 +103,18 @@ const CreateBlog = () => {
                 },
               ]}
             >
-              <Input className="w-auto" placeholder="Title " />
+              <Input
+                value={input?.title}
+                className="w-auto"
+                placeholder="Title "
+              />
             </Form.Item>
             <Form.Item name="image">
-              <Input className="w-auto" placeholder="Image (Optional)" />
+              <Input
+                className="w-auto "
+                value={input?.image}
+                placeholder="Image (Optional)"
+              />
             </Form.Item>
 
             <Form.Item
@@ -75,7 +129,7 @@ const CreateBlog = () => {
                 type="primary"
                 htmlType="submit"
               >
-                Submit
+                {input.id ? "update" : "Submit"}
               </Button>
             </Form.Item>
           </Form>

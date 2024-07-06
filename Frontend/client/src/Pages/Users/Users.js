@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LogoutHeader from "../../component/LogoutHeader/logoutHeader";
 import Cookies from "js-cookie";
 import UserCard from "../../component/UserCard/UserCard";
 import toast from "react-hot-toast";
@@ -32,7 +31,7 @@ const Users = () => {
     getAllUser();
   }, [navigate]);
   return (
-    <div className="bg-login-bg h-full">
+    <div className="pt-16 bg-login-bg h-full">
       <div className="pt-5">
         {user ? (
           user.map((users) => {

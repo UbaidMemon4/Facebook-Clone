@@ -9,10 +9,14 @@ import { Avatar, Card } from "antd";
 import toast from "react-hot-toast";
 import { BASE_URL } from "../../constent";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const { Meta } = Card;
 const BlogCard = (blog) => {
-  const handleEdit = () => {};
+  const navigate = useNavigate();
+  const handleEdit = (id) => {
+    navigate(`/Create-blog/${id}`);
+  };
   const handleDelete = async () => {
     try {
       const { data } = await axios.delete(
@@ -57,7 +61,7 @@ const BlogCard = (blog) => {
                 <EditOutlined
                   className="text-blue-500 hover:text-gray-700 cursor-pointer"
                   key="edit"
-                  onClick={handleEdit}
+                  onClick={() => handleEdit(blog.id)}
                 />
                 ,
               </div>,

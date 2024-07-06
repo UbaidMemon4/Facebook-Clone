@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import LogoutHeader from "../../component/LogoutHeader/logoutHeader";
 import Cookies from "js-cookie";
+import UserBlog_Profile from "../../component/UserBlog_Profile/UserBlog_Profile";
 
-const Messages = () => {
+const Profile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = `Messages || Facebook`;
+    document.title = `User Profile || Facebook`;
     const token = Cookies.get("JWT");
 
     if (!token) {
@@ -15,10 +15,12 @@ const Messages = () => {
     }
   }, [navigate]);
   return (
-    <div className="bg-login-bg h-full">
-      <div className="py-10">Live messages Feature is Available soon.</div>
+    <div className="bg-login-bg h-full pt-20 ">
+      <div className=" mx-3">
+        <UserBlog_Profile />
+      </div>
     </div>
   );
 };
 
-export default Messages;
+export default Profile;

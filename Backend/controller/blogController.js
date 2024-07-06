@@ -110,11 +110,10 @@ exports.updateBlogContoller = async (req, res) => {
     );
     return res.status(200).send({
       success: true,
-      message: "Blog Updated Suuceesful",
+      message: "Blog Updated Suceesful",
       blog,
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).send({
       success: false,
       message: "Error while updating blogs",

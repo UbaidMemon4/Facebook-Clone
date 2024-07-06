@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import LogoutHeader from "../../component/LogoutHeader/logoutHeader";
 import CreateBlog from "../../component/CreateBlog/CreateBlog";
 import AllBLogs from "../../component/AllBLogs/AllBLogs";
 

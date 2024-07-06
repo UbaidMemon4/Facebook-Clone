@@ -621,8 +621,8 @@ video {
   margin-left: 2rem;
 }
 
-.ml-margin88 {
-  margin-left: 88px;
+.ml-margin68 {
+  margin-left: 68px;
 }
 
 .ml-nagative87 {
@@ -649,6 +649,10 @@ video {
   margin-right: 8rem;
 }
 
+.mr-4 {
+  margin-right: 1rem;
+}
+
 .mt-1 {
   margin-top: 0.25rem;
 }
@@ -671,10 +675,6 @@ video {
 
 .mt-4 {
   margin-top: 1rem;
-}
-
-.mr-4 {
-  margin-right: 1rem;
 }
 
 .flex {
@@ -805,6 +805,22 @@ video {
   width: 432px;
 }
 
+.w-800 {
+  width: 800px;
+}
+
+.min-w-28 {
+  min-width: 7rem;
+}
+
+.min-w-36 {
+  min-width: 9rem;
+}
+
+.max-w-3xl {
+  max-width: 48rem;
+}
+
 .cursor-context-menu {
   cursor: context-menu;
 }
@@ -845,6 +861,10 @@ video {
   gap: 0.5rem;
 }
 
+.gap-32 {
+  gap: 8rem;
+}
+
 .rounded-3xl {
   border-radius: 1.5rem;
 }
@@ -869,6 +889,11 @@ video {
 .border-dadde1 {
   --tw-border-opacity: 1;
   border-color: rgb(218 221 225 / var(--tw-border-opacity));
+}
+
+.bg-blue-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
 }
 
 .bg-createSignUp {
@@ -969,6 +994,10 @@ video {
   padding-top: 4rem;
 }
 
+.pt-20 {
+  padding-top: 5rem;
+}
+
 .pt-28 {
   padding-top: 7rem;
 }
@@ -977,16 +1006,12 @@ video {
   padding-top: 0.75rem;
 }
 
-.pt-6 {
-  padding-top: 1.5rem;
-}
-
-.pb-10 {
-  padding-bottom: 2.5rem;
-}
-
 .pt-5 {
   padding-top: 1.25rem;
+}
+
+.pt-6 {
+  padding-top: 1.5rem;
 }
 
 .text-center {

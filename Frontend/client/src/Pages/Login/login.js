@@ -122,11 +122,11 @@ const Login = () => {
                 >
                   Forgotten Password
                 </h1>
-                <div className="_8icz mx-4 my-5 border border-dadde1"></div>
-                <div v="_6ltg">
+                <div className="_mx-4 my-5 border border-dadde1"></div>
+                <div>
                   <Button
                     onClick={() => navigate("/signup")}
-                    className="bg-formCreateColor text-center text-white mb-1 ml-margin88 h-11"
+                    className="bg-formCreateColor text-center text-white mb-1 ml-margin68 h-11"
                   >
                     Create new account
                   </Button>

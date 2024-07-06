@@ -13,7 +13,7 @@ module.exports = {
       },
       margin: {
         nagative87: "-87px",
-        margin88: "88px",
+        margin68: "68px",
         218: "218px",
         407: "407px",
       },
@@ -29,6 +29,7 @@ module.exports = {
         366: "366px",
         500: "500px",
         467: "467px",
+        800: "800px",
         "100%": "100%",
       },
       height: {
