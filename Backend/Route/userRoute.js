@@ -6,6 +6,7 @@ const {
   registerControllerOtp,
   forgetPassword,
   newPassword,
+  updateUserContoller,
 } = require("../controller/userController");
 
 // router object
@@ -28,5 +29,8 @@ router.post("/forget-password", forgetPassword);
 
 //Forget Password ||  New Password || Post
 router.post("/new-password", newPassword);
+
+//Update User || Pudty
+router.put("/update-user/:id", updateUserContoller);
 
 module.exports = router;

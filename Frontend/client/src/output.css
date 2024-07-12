@@ -535,12 +535,24 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.\!visible {
+  visibility: visible !important;
+}
+
+.visible {
+  visibility: visible;
+}
+
 .static {
   position: static;
 }
 
 .fixed {
   position: fixed;
+}
+
+.z-99 {
+  z-index: 99;
 }
 
 .mx-10 {
@@ -805,14 +817,6 @@ video {
   width: 432px;
 }
 
-.w-800 {
-  width: 800px;
-}
-
-.min-w-28 {
-  min-width: 7rem;
-}
-
 .min-w-36 {
   min-width: 9rem;
 }
@@ -859,10 +863,6 @@ video {
 
 .gap-2 {
   gap: 0.5rem;
-}
-
-.gap-32 {
-  gap: 8rem;
 }
 
 .rounded-3xl {

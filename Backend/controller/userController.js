@@ -286,3 +286,27 @@ exports.newPassword = async (req, res) => {
     });
   }
 };
+exports.updateUserContoller = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log("req.params=>", req.params);
+    console.log("req.body=>", req.body);
+    const user = await UserModal.findByIdAndUpdate(
+      id,
+      { ...req.body },
+      { new: true }
+    );
+    console.log("user=>", user);
+    return res.status(200).send({
+      success: true,
+      message: "User Updated Suceesful",
+      user,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      success: false,
+      message: "Error while updating user",
+      error,
+    });
+  }
+};

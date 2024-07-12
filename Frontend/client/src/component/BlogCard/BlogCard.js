@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   CommentOutlined,
   DeleteOutlined,
   EditOutlined,
+  LikeFilled,
   LikeOutlined,
 } from "@ant-design/icons";
 import { Avatar, Card } from "antd";
@@ -10,10 +11,17 @@ import toast from "react-hot-toast";
 import { BASE_URL } from "../../constent";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
-const { Meta } = Card;
 const BlogCard = (blog) => {
+  const [like, setLike] = useState(false);
+  const [likeLenght, setLikeLenght] = useState(0);
+  const { Meta } = Card;
   const navigate = useNavigate();
+  const token = Cookies.get("JWT");
+  useEffect(() => {
+    setLikeLenght(blog.likeLenght);
+  }, []);
   const handleEdit = (id) => {
     navigate(`/Create-blog/${id}`);
   };
@@ -24,7 +32,21 @@ const BlogCard = (blog) => {
       );
       if (data?.success) {
         toast.success("Blog Deleted!");
-        window.location.reload();
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
+  const handleLike = async () => {
+    // like === true ? setLike(false) : setLike(true);
+    try {
+      const { data } = await axios.post(
+        `${BASE_URL}/blog/like-blog/${blog.id}`,
+        { token: token }
+      );
+      if (data?.success) {
+        setLikeLenght(data.totalLikes);
+        setLike(data.like);
       }
     } catch (error) {
       toast.error(error.response.data.message);
@@ -32,6 +54,7 @@ const BlogCard = (blog) => {
   };
   return (
     <Card
+      key={blog.id}
       className="w-full mb-4"
       cover={
         blog?.image && (
@@ -42,10 +65,10 @@ const BlogCard = (blog) => {
         blog.isUser
           ? [
               <div className="flex justify-around  cursor-context-menu">
-                <LikeOutlined
-                  className="text-blue-500 hover:text-gray-700 cursor-pointer"
-                  key="like"
-                />
+                <div className="flex justify-around ">
+                  <LikeOutlined disabled className="text-blue-500" key="like" />
+                  {likeLenght}
+                </div>
                 ,
                 <CommentOutlined
                   className="text-blue-500 hover:text-gray-700 cursor-pointer"
@@ -68,11 +91,26 @@ const BlogCard = (blog) => {
             ]
           : [
               <div className="flex justify-around cursor-context-menu">
-                <LikeOutlined
-                  key="like"
-                  className="text-blue-500 hover:text-gray-700 cursor-pointer"
-                />
-                ,{" "}
+                {like === true ? (
+                  <div className="flex justify-around ">
+                    <LikeFilled
+                      className="text-blue-500 hover:text-gray-700 cursor-pointer"
+                      key="like"
+                      onClick={handleLike}
+                    />
+                    {likeLenght}
+                  </div>
+                ) : (
+                  <div className="flex justify-around ">
+                    <LikeOutlined
+                      className="text-blue-500 hover:text-gray-700 cursor-pointer"
+                      key="like"
+                      onClick={handleLike}
+                    />
+                    {likeLenght}
+                  </div>
+                )}
+                ,
                 <CommentOutlined
                   key="comment"
                   className="text-blue-500 hover:text-gray-700 cursor-pointer"

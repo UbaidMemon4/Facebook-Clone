@@ -35,6 +35,7 @@ const AllBLogs = () => {
                 username={blog?.user?.firstname}
                 isUser={Cookies.get("JWT") === blog?.user?.token}
                 id={blog?._id}
+                likeLenght={blog?.likes.length}
               />
             </div>
           );

@@ -42,6 +42,9 @@ module.exports = {
       borderColor: {
         dadde1: "#dadde1",
       },
+      zIndex: {
+        "99": "99",
+      },
     },
   },
   plugins: [],
