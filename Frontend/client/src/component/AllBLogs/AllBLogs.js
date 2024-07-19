@@ -23,10 +23,12 @@ const AllBLogs = () => {
   useEffect(() => {
     getAllBlog();
   }, []);
+
   return (
     <div className="w-full">
       {blogs ? (
         blogs.map((blog) => {
+          console.log(blog);
           return (
             <div key={blog._id}>
               <BlogCard
@@ -36,6 +38,7 @@ const AllBLogs = () => {
                 isUser={Cookies.get("JWT") === blog?.user?.token}
                 id={blog?._id}
                 likeLenght={blog?.likes.length}
+                comments={blog?.comments}
               />
             </div>
           );

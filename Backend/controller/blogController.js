@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cloudinary = require("../config/cloudinaryConfig");
+const CommentModal = require("../Modal/commentModal");
 
 // Configure multer storage with Cloudinar
 const storage = new CloudinaryStorage({
@@ -41,7 +42,6 @@ exports.createBlogContoller = async (req, res) => {
       upload.single("image");
       let imageUrl = req.file.path;
     }
-    console.log("imageUrl=>", imageUrl);
     // Create a new blog
     const newBlog = new blogModal({ title, image: imageUrl, user });
 
@@ -70,7 +70,10 @@ exports.createBlogContoller = async (req, res) => {
 //Get-All-Blogs
 exports.getAllBlogsContoller = async (req, res) => {
   try {
-    const blogs = await blogModal.find({}).populate("user");
+    const blogs = await blogModal
+      .find({})
+      .populate("user")
+      .populate("comments");
 
     if (!blogs) {
       return res.status(400).send({
@@ -166,7 +169,8 @@ exports.userBlogContoller = async (req, res) => {
     const { id } = req.params;
     const token = id;
     const populatedUser = await UserModal.findOne({ token }).populate("blogs");
-    if (!userBlog) {
+
+    if (!populatedUser) {
       res.status(404).send({
         success: false,
         message: "Blog not found with this id",
@@ -234,6 +238,50 @@ exports.likeUnlikeContoller = async (req, res) => {
       success: false,
       message: "Error toggling like on the blog",
       error: error.message,
+    });
+  }
+};
+
+//Comment-Blog
+exports.commentController = async (req, res) => {
+  try {
+    const { id } = req.params; // ID of the blog post
+    const { token, content } = req.body; // Token of the user and content of the comment
+    const blog = await blogModal.findById(id);
+    if (!blog) {
+      return res.status(404).send({
+        success: false,
+        message: "Blog not found",
+      });
+    }
+
+    const user = await UserModal.findOne({ token });
+    if (!user) {
+      return res.status(401).send({
+        success: false,
+        message: "Unable to find user",
+      });
+    }
+    const comment = new CommentModal({
+      content,
+      user: user,
+      blog: blog._id,
+    });
+    await comment.save();
+
+    blog.comments.push(comment._id);
+    await blog.save();
+    return res.status(201).send({
+      success: true,
+      message: "Comment posted successfully",
+      comment,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: "Error posting comment",
+      error: error,
     });
   }
 };

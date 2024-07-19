@@ -6,7 +6,7 @@ import {
   LikeFilled,
   LikeOutlined,
 } from "@ant-design/icons";
-import { Avatar, Card } from "antd";
+import { Button, Form, Card, Modal, Input, Avatar, List } from "antd";
 import toast from "react-hot-toast";
 import { BASE_URL } from "../../constent";
 import axios from "axios";
@@ -14,13 +14,17 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const BlogCard = (blog) => {
-  const [like, setLike] = useState(false);
-  const [likeLenght, setLikeLenght] = useState(0);
   const { Meta } = Card;
+  const [like, setLike] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [likeLenght, setLikeLenght] = useState(0);
+  const [totalComment, setTotalComment] = useState({});
   const navigate = useNavigate();
+
   const token = Cookies.get("JWT");
   useEffect(() => {
     setLikeLenght(blog.likeLenght);
+    setTotalComment(blog.comments);
   }, []);
   const handleEdit = (id) => {
     navigate(`/Create-blog/${id}`);
@@ -38,7 +42,6 @@ const BlogCard = (blog) => {
     }
   };
   const handleLike = async () => {
-    // like === true ? setLike(false) : setLike(true);
     try {
       const { data } = await axios.post(
         `${BASE_URL}/blog/like-blog/${blog.id}`,
@@ -52,6 +55,25 @@ const BlogCard = (blog) => {
       toast.error(error.response.data.message);
     }
   };
+
+  const onFinish = async (values) => {
+    console.log("Success:", values);
+    try {
+      const { data } = await axios.post(
+        `${BASE_URL}/blog/${blog.id}/comments`,
+        {
+          token: token,
+          content: values.content,
+        }
+      );
+      if (data?.success) {
+        setTotalComment(data.comment);
+      }
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  };
+  console.log("totalComment=>", totalComment);
   return (
     <Card
       key={blog.id}
@@ -69,24 +91,23 @@ const BlogCard = (blog) => {
                   <LikeOutlined disabled className="text-blue-500" key="like" />
                   {likeLenght}
                 </div>
-                ,
+
                 <CommentOutlined
                   className="text-blue-500 hover:text-gray-700 cursor-pointer"
                   key="comment"
                 />
-                ,
+
                 <DeleteOutlined
                   className="text-blue-500 hover:text-gray-700 cursor-pointer"
                   key="delete"
                   onClick={handleDelete}
                 />
-                ,
+
                 <EditOutlined
                   className="text-blue-500 hover:text-gray-700 cursor-pointer"
                   key="edit"
                   onClick={() => handleEdit(blog.id)}
                 />
-                ,
               </div>,
             ]
           : [
@@ -94,7 +115,7 @@ const BlogCard = (blog) => {
                 {like === true ? (
                   <div className="flex justify-around ">
                     <LikeFilled
-                      className="text-blue-500 hover:text-gray-700 cursor-pointer"
+                      className="text-gray-500 hover:text-blue-500 cursor-pointer"
                       key="like"
                       onClick={handleLike}
                     />
@@ -110,11 +131,83 @@ const BlogCard = (blog) => {
                     {likeLenght}
                   </div>
                 )}
-                ,
+
                 <CommentOutlined
-                  key="comment"
-                  className="text-blue-500 hover:text-gray-700 cursor-pointer"
+                  className="text-blue-500  cursor-pointer"
+                  onClick={() => setOpen(true)}
                 />
+
+                <Modal
+                  title={`${blog.username} Post Comment`}
+                  open={open}
+                  onCancel={() => setOpen(false)}
+                  footer={false}
+                >
+                  <Form
+                    name="add-comment"
+                    labelCol={{
+                      span: 8,
+                    }}
+                    wrapperCol={{
+                      span: 16,
+                    }}
+                    style={{
+                      maxWidth: 600,
+                    }}
+                    initialValues={{
+                      remember: true,
+                    }}
+                    onFinish={onFinish}
+                    autoComplete="off"
+                  >
+                    <Form.Item
+                      label="Add new comment"
+                      name="content"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please add your comment!",
+                        },
+                      ]}
+                    >
+                      <Input />
+                    </Form.Item>
+                    <Form.Item
+                      wrapperCol={{
+                        offset: 8,
+                        span: 16,
+                      }}
+                    >
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        className="bg-blue-500"
+                      >
+                        Submit
+                      </Button>
+                    </Form.Item>
+                  </Form>
+                  {totalComment && totalComment.length > 0 ? (
+                    totalComment.map((comment) => {
+                      console.log(comment);
+                      return (
+                        <List itemLayout="horizontal">
+                          <List.Item>
+                            <List.Item.Meta
+                              avatar={
+                                <Avatar>{comment.user?.firstname}</Avatar>
+                              }
+                              title={comment.user?.firstname}
+                              description={comment.content}
+                            />
+                          </List.Item>
+                        </List>
+                      );
+                    })
+                  ) : (
+                    <p>Comments are available.</p>
+                  )}
+                </Modal>
               </div>,
             ],
       ]}
