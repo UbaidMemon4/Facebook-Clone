@@ -40,6 +40,8 @@ const UserSchema = new mongoose.Schema(
         ref: "Blog",
       },
     ],
+    friends: [{ type: mongoose.Types.ObjectId, ref: "User" }],
+    friendRequests: [{ type: mongoose.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
 );

@@ -3,31 +3,35 @@ import { Avatar, Card, Button, Spin } from "antd";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { BASE_URL } from "../../constent";
+import toast from "react-hot-toast";
 
 const { Meta } = Card;
 const UserCArd = (user) => {
-  const [spin, setSpin] = useState(false);
   const [friend, setFriend] = useState(false);
 
+  const cancelReq = async (e) => {
+    setFriend(false);
+  };
   const addFriend = async (e) => {
     console.log("e", e);
-    setSpin(true);
 
     const token = Cookies.get("JWT");
-    // try {
-    //   const { data } = await axios.post(`${BASE_URL}/user/friend-req/`, {
-    //     senderId: user.id,
-    //     receiverToken: token,
-    //   });
-    //   if (data.success) {
-    //     setSpin(false);
-    //     setFriend(true);
-    //   }
-    // } catch (error) {
-    //   setFriend(false);
-    //   setSpin(false);
-    //   console.log(error.response.data.message);
-    // }
+    try {
+      const { data } = await axios.post(
+        `${BASE_URL}/user/send-friend-request`,
+        {
+          senderToken: token,
+          receiverId: user.id,
+        }
+      );
+      if (data.success) {
+        setFriend(true);
+        toast.success("Friend request sent");
+      }
+    } catch (error) {
+      setFriend(false);
+      toast.error("Failed to send friend request");
+    }
   };
   return (
     <div className="bg-white h-16 mx-10 mb-5 flex justify-between px-10 py-4">
@@ -37,9 +41,11 @@ const UserCArd = (user) => {
         title={user.userName}
       />
       {friend === true ? (
-        <Button disabled>Freind Request Send Successflly</Button>
+        <Button onClick={() => cancelReq()} className="bg-blue-500 text-white">
+          Unsend Friend Request
+        </Button>
       ) : (
-        <Button onClick={addFriend()} className="bg-blue-500 text-white">
+        <Button onClick={() => addFriend()} className="bg-blue-500 text-white">
           Add Friend
         </Button>
       )}

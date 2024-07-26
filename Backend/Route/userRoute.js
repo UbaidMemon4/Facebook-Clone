@@ -7,6 +7,10 @@ const {
   forgetPassword,
   newPassword,
   updateUserContoller,
+  sendReqContoller,
+  getAllFriendRequests,
+  deleteFriendRequest,
+  acceptFriendRequest,
 } = require("../controller/userController");
 
 // router object
@@ -30,7 +34,19 @@ router.post("/forget-password", forgetPassword);
 //Forget Password ||  New Password || Post
 router.post("/new-password", newPassword);
 
-//Update User || Pudty
+//Update User || Put
 router.put("/update-user/:id", updateUserContoller);
+
+//Send Friend Req || post
+router.post("/send-friend-request", sendReqContoller);
+
+//Get All Friend Req || post
+router.get("/all-friend-requests/:id", getAllFriendRequests);
+
+//Friend Req Deleted|| delete
+router.delete("/delete-friend-request", deleteFriendRequest);
+
+//Friend Req Accept|| post
+router.post("/accept-friend-request", acceptFriendRequest);
 
 module.exports = router;

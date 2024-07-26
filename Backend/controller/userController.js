@@ -189,6 +189,7 @@ exports.loginUsers = async (req, res) => {
     });
   }
 };
+
 exports.forgetPassword = async (req, res) => {
   try {
     const { email } = req.body;
@@ -286,6 +287,7 @@ exports.newPassword = async (req, res) => {
     });
   }
 };
+
 exports.updateUserContoller = async (req, res) => {
   try {
     const { id } = req.params;
@@ -307,6 +309,117 @@ exports.updateUserContoller = async (req, res) => {
       success: false,
       message: "Error while updating user",
       error,
+    });
+  }
+};
+//Send Friend Request
+exports.sendReqContoller = async (req, res) => {
+  try {
+    const { senderToken, receiverId } = req.body;
+    const receiver = await UserModal.findById(receiverId);
+    const sender = await UserModal.findOne({ token: senderToken });
+
+    if (!sender || !receiver) {
+      return res
+        .status(404)
+        .json({ message: "User not found", success: false });
+    }
+    if (!receiver.friendRequests.includes(receiverId)) {
+      receiver.friendRequests.push(receiverId);
+      await receiver.save();
+    }
+    res.status(200).json({ message: "Friend request sent", success: true });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Error sending friend request", error, success: false });
+  }
+};
+
+//Get All Friend request
+exports.getAllFriendRequests = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await UserModal.findOne({ token: id }).populate(
+      "friendRequests"
+    );
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res
+      .status(200)
+      .json({ friendRequests: user.friendRequests, success: true });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error fetching friend requests",
+      error,
+      success: false,
+    });
+  }
+};
+
+//DeleteFriendReq
+exports.deleteFriendRequest = async (req, res) => {
+  try {
+    const { friendId } = req.body;
+    const token = req.headers.authorization?.split(" ")[1];
+    const user = await UserModal.findOne({ token });
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "User not found", success: false });
+    }
+
+    // Remove the friend request
+    user.friendRequests = user.friendRequests.filter(
+      (id) => id.toString() !== friendId
+    );
+
+    await user.save();
+
+    res.status(200).json({ message: "Friend request deleted", success: true });
+  } catch (error) {
+    console.error("Error deleting friend request:", error);
+    res.status(500).json({
+      message: "Error deleting friend request",
+      error,
+      success: false,
+    });
+  }
+};
+exports.acceptFriendRequest = async (req, res) => {
+  try {
+    const { friendId, token } = req.body;
+
+    const user = await UserModal.findOne({ token });
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "User not found", success: false });
+    }
+    const friend = await UserModal.findById(friendId);
+
+    if (!friend) {
+      return res
+        .status(404)
+        .json({ message: "Friend not found", success: false });
+    }
+    user.friendRequests = user.friendRequests.filter(
+      (id) => id.toString() !== friendId
+    );
+    friend.friends.push(user._id);
+    await user.save();
+    await friend.save();
+    user.friends.push(friendId);
+    res.status(200).json({ message: "Friend request accepted", success: true });
+  } catch (error) {
+    console.error("Error accepting friend request:", error);
+    res.status(500).json({
+      message: "Error accepting friend request",
+      error,
+      success: false,
     });
   }
 };
