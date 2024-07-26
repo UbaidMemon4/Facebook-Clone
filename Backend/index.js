@@ -22,7 +22,7 @@ app.use(express.json());
 
 //cors config
 const corsOptions = {
-  origin: "https://your-vercel-app.vercel.app", // Replace with your Vercel app URL
+  origin: "https://facebook-clone-blue-three.vercel.app/", // Replace with your Vercel app URL
   optionsSuccessStatus: 200,
 };
 
