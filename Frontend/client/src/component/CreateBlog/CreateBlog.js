@@ -143,14 +143,24 @@ const CreateBlog = () => {
               span: 16,
             }}
           >
-            {spin === true ? <Spin className="mr-4" /> : ""}
-            <Button
-              className="w-auto bg-forgotenPassword"
-              type="primary"
-              htmlType="submit"
-            >
-              {input.id ? "Update" : "Submit"}
-            </Button>
+            {spin === false ? (
+              <Button
+                className="w-auto bg-forgotenPassword"
+                type="primary"
+                htmlType="submit"
+              >
+                {input.id ? "Update" : "Submit"}
+              </Button>
+            ) : (
+              <Button
+                className="bg-createSignUp"
+                type="primary"
+                htmlType="submit"
+                disabled
+              >
+                <Spin />
+              </Button>
+            )}
           </Form.Item>
         </Form>
       </div>

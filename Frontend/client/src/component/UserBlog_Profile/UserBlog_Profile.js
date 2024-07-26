@@ -137,13 +137,13 @@ const UserBlog_Profile = () => {
                 <Input />
               </Form.Item>
 
-              {spin === true ? (
+              {/* {spin === true ? (
                 <div className="z-99 flex justify-center">
                   <Spin className=" fixed" />
                 </div>
               ) : (
                 ""
-              )}
+              )} */}
               <Form.Item
                 label="Date-Of-Birth"
                 name="dateofbirth"
@@ -174,9 +174,8 @@ const UserBlog_Profile = () => {
                   span: 16,
                 }}
               >
-                {spin === true ? (
+                {spin === false ? (
                   <Button
-                    disabled
                     className="bg-blue-500"
                     type="primary"
                     htmlType="submit"
@@ -185,11 +184,12 @@ const UserBlog_Profile = () => {
                   </Button>
                 ) : (
                   <Button
-                    className="bg-blue-500"
+                    className="bg-createSignUp"
                     type="primary"
                     htmlType="submit"
+                    disabled
                   >
-                    Update Profile Detail
+                    <Spin />
                   </Button>
                 )}
               </Form.Item>

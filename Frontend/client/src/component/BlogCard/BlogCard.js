@@ -205,7 +205,7 @@ const BlogCard = (blog) => {
                       );
                     })
                   ) : (
-                    <p>Comments are available.</p>
+                    <p>Comments are not available.</p>
                   )}
                 </Modal>
               </div>,

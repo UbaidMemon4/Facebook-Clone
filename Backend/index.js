@@ -20,6 +20,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+//cors config
+const corsOptions = {
+  origin: "https://your-vercel-app.vercel.app", // Replace with your Vercel app URL
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
+
 //routes
 app.use("/user", userRoutes);
 app.use("/blog", blogRoutes);

@@ -2,7 +2,6 @@ import React from "react";
 import {
   HomeOutlined,
   LogoutOutlined,
-  MessageOutlined,
   UserOutlined,
   UsergroupAddOutlined,
 } from "@ant-design/icons";
@@ -45,10 +44,6 @@ const LogoutHeader = () => {
           <Tab
             label={<UsergroupAddOutlined />}
             onClick={() => navigate("/users")}
-          />
-          <Tab
-            label={<MessageOutlined />}
-            onClick={() => navigate("/messages")}
           />
           <Tab
             label={<UserOutlined />}

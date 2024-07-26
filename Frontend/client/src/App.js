@@ -10,7 +10,6 @@ import ForgettenPassword from "./Pages/Forget Password/forgettenPassword";
 import NewPassword from "./Pages/Forget Password/newPassword";
 import Cookies from "js-cookie";
 import Profile from "./Pages/Profile/Profile";
-import Messages from "./Pages/Messages/Messages";
 import Users from "./Pages/Users/Users";
 import HeaderAppjs from "./component/HeaderAppjs/HeaderAppjs";
 import CreateBlog from "./component/CreateBlog/CreateBlog";
@@ -28,7 +27,6 @@ const App = () => {
         <Route path="/newpassword" element={<NewPassword />} />
         <Route path="/forgetpassword" element={<ForgettenPassword />} />
         <Route path="/my-profile" element={<Profile />} />
-        <Route path="/messages" element={<Messages />} />
         <Route path="/users" element={<Users />} />
         <Route path="/Create-blog" element={<CreateBlog />} />
         <Route path="/Create-blog/:id" element={<CreateBlog />} />
